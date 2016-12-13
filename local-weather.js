@@ -1,4 +1,6 @@
-/*var data = {
+/*
+FORM of the Weather Data
+var data = {
   "coord":{"lon":139,"lat":35 },
   "sys":{"country":"JP","sunrise":1369769524,"sunset":1369821049},
   "weather":[{"id":804,"main":"clouds","description":"overcast clouds","icon":"04n"}],
@@ -24,21 +26,6 @@ var country;
 var weatherMain; 
 var weatherTemp;
 var icon;
-
-/*
-var conditionSymbol = { // object used to select weather icon to display
-    1: "clear sky": "<img src=\"assets\/svg\/sun.svg\" height=\"25px\" width=\"25px\">",
-    2: "few clouds": "<img src=\"assets\/svg\/cloudy.svg\" height=\"25px\" width=\"25px\">",
-    3: "scattered clouds": "<img src=\"assets\/svg\/cloud.svg\" height=\"25px\" width=\"25px\">",
-    4: "broken clouds": "<img src=\"assets\/svg\/cloud.svg\" height=\"25px\" width=\"25px\">",
-    5: "shower rain": "<img src=\"assets\/svg\/rain-2.svg\" height=\"25px\" width=\"25px\">",
-    6: "rain": "<img src=\"assets\/svg\/rain-1.svg\" height=\"25px\" width=\"25px\">",
-    7: "thundershower": "<img src=\"assets\/svg\/storm-2.svg\" height=\"25px\" width=\"25px\">",
-    8: "snow": "<img src=\"assets\/svg\/snowing-1.svg\" height=\"25px\" width=\"25px\">",
-    9: "mist": "<img src=\"assets\/svg\/moon.svg\" height=\"25px\" width=\"25px\">"
-};
-
-*/
 
 function switchTemp() {
     if (celcius === true) {
