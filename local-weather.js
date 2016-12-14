@@ -48,7 +48,7 @@ $(document).ready(function() {
         navigator.geolocation.getCurrentPosition(function(position) {
             lat = position.coords.latitude.toFixed(2);
             lon = position.coords.longitude.toFixed(2);
-            url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=b2fc4379d2103e91efa87b191215ee13&units=metric';
+            url = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=b2fc4379d2103e91efa87b191215ee13&units=metric';
             getWeatherData();
         });
     }
