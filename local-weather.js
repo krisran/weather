@@ -1,20 +1,3 @@
-/*
-FORM of the Weather Data
-var data = {
-  "coord":{"lon":139,"lat":35 },
-  "sys":{"country":"JP","sunrise":1369769524,"sunset":1369821049},
-  "weather":[{"id":804,"main":"clouds","description":"overcast clouds","icon":"04n"}],
-  "main":{"temp":289.5,"humidity":89,"pressure":1013,"temp_min":287.04,"temp_max":292.04},
-  "wind":{"speed":7.31,"deg":187.002},
-  "rain":{"3h":0},
-  "clouds":{"all":92},
-  "dt":1369824698,
-  "id":1851632,
-  "name":"Shuzenji",
-  "cod":200
-}
-*/
-
 var url;
 var lat;
 var lon;
@@ -24,36 +7,40 @@ var tempFahren;
 var city;
 var country;
 var weatherMain;
-var weatherDesc;
 var weatherTemp;
 var icon;
 
 function switchTemp() {
     if (celcius === true) {
         weatherTemp = tempFahren;
-        document.getElementById("symbol").innerHTML = "<img src=\"assets\/svg\/farenheit.svg\" height=\25px\" width=\"25px\">";
+        document.getElementById("symbol").innerHTML = "<i class=\"wi wi-fahrenheit\"></i>";
         document.getElementById("weatherTemp").innerHTML = weatherTemp;
-        return celcius = false;
+        celcius = false;
 
     } else {
         weatherTemp = tempCelcius;
-        document.getElementById("symbol").innerHTML = "<img src=\"assets\/svg\/celsius.svg\" height=\25px\" width=\"25px\">";
+        document.getElementById("symbol").innerHTML = "<i class=\"wi wi-celsius\"></i>";
         document.getElementById("weatherTemp").innerHTML = weatherTemp;
-        return celcius = true;
+        celcius = true;
     }
 }
 
 $(document).ready(function() {
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            lat = position.coords.latitude.toFixed(2);
-            lon = position.coords.longitude.toFixed(2);
-            url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=b2fc4379d2103e91efa87b191215ee13&units=metric';
+  $('#symbol').click(function(){ switchTemp();
+                                
+    });
+
+  $.getJSON("http://ip-api.com/json/?callback=?", function(data) {
+    
+            $("#city").html(data.city);
+            $("#country").html(data.country);
+            city = data.city;
+            countryCode = data.countryCode;
+            url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + ',' + countryCode + '&appid=b2fc4379d2103e91efa87b191215ee13&units=metric';
             getWeatherData();
         });
-    }
-});
+}); //ready
 
 function getWeatherData() {
 
@@ -65,55 +52,48 @@ function getWeatherData() {
 
         success: function(data) {
 
-            city = data.name;
-            country = data.sys.country;
             weatherMain = data.weather[0].main;
             weatherDesc = data.weather[0].description;
-            tempCelcius = Math.round(data.main.temp); // round temp in Celcius to nearest integer
+            tempCelcius = Math.round(data.main.temp);  // round temp in Celcius to nearest integer
             tempFahren = Math.round(data.main.temp * 1.8 + 32); // convert temp to Fahrenheit and then round to nearest integer
             weatherTemp = tempCelcius;
             celcius = true;
 
-
             switch (weatherDesc) {
                   case "clear sky":
-                      icon = "<img src=\"assets\/svg\/sun.svg\" height=\"25px\" width=\"25px\">";
+                      icon = "<i class=\"wi wi-day-sunny\"></i>";
                       break;
                   case "few clouds":
-                      icon = "<img src=\"assets\/svg\/cloudy.svg\" height=\"25px\" width=\"25px\">";
+                      icon = "<i class=\"wi wi-cloud\"></i>";
                       break;
                   case "scattered clouds":
-                      icon = "<img src=\"assets\/svg\/cloud.svg\" height=\"25px\" width=\"25px\">";
+                      icon = "<i class=\"wi wi-cloudy\"></i>";
                       break;
                   case "broken clouds":
-                      icon = "<img src=\"assets\/svg\/cloud.svg\" height=\"25px\" width=\"25px\">"
+                      icon = "<i class=\"wi wi-cloudy\"></i>";
                       break;
                   case "shower rain":
-                      icon = "<img src=\"assets\/svg\/rain-2.svg\" height=\"25px\" width=\"25px\">";
+                  icon = "<i class=\"wi wi-showers\"></i>";
                       break;
                   case "rain":
-                      icon = "<img src=\"assets\/svg\/rain-1.svg\" height=\"25px\" width=\"25px\">";
+                  icon = "<i class=\"wi wi-rain\"></i>";
                       break;
                   case "thundershower":
-                      icon = "<img src=\"assets\/svg\/storm-2.svg\" height=\"25px\" width=\"25px\">";
+                  icon = "<i class=\"wi wi-storm-showers\"></i>";
                       break;
                   case "snow":
-                      icon = "<img src=\"assets\/svg\/snowing-1.svg\" height=\"25px\" width=\"25px\">";
+                      icon = "<i class=\"wi wi-snow\"></i>";//"<img src=\"assets\/svg\/snowing-1.svg\" height=\"25px\" width=\"25px\">";
                       break;
                   case "mist":
-                      icon = "<img src=\"assets\/svg\/moon.svg\" height=\"25px\" width=\"25px\">";
+                  icon = "<i class=\"wi wi-fog\"></i>";
+
                       break;
               }
 
             document.getElementById("weatherTemp").innerHTML = weatherTemp;
             document.getElementById("icon").innerHTML = icon;
-            document.getElementById("weatherMain").innerHTML = weatherMain;   
+            document.getElementById("weatherMain").innerHTML = weatherMain;
             document.getElementById("city").innerHTML = city;
-            document.getElementById("country").innerHTML = country;
         }
     });
-
-
-
-
 }
