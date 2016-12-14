@@ -23,7 +23,8 @@ var tempCelcius;
 var tempFahren;
 var city;
 var country;
-var weatherMain; 
+var weatherMain;
+var weatherDesc;
 var weatherTemp;
 var icon;
 
@@ -67,13 +68,14 @@ function getWeatherData() {
             city = data.name;
             country = data.sys.country;
             weatherMain = data.weather[0].main;
+            weatherDesc = data.weather[0].description;
             tempCelcius = Math.round(data.main.temp); // round temp in Celcius to nearest integer
             tempFahren = Math.round(data.main.temp * 1.8 + 32); // convert temp to Fahrenheit and then round to nearest integer
             weatherTemp = tempCelcius;
             celcius = true;
 
 
-            switch (weatherMain) {
+            switch (weatherDesc) {
                   case "clear sky":
                       icon = "<img src=\"assets\/svg\/sun.svg\" height=\"25px\" width=\"25px\">";
                       break;
@@ -103,10 +105,9 @@ function getWeatherData() {
                       break;
               }
 
-
-            document.getElementById("icon").innerHTML = icon;
-            document.getElementById("weatherMain").innerHTML = weatherMain;
             document.getElementById("weatherTemp").innerHTML = weatherTemp;
+            document.getElementById("icon").innerHTML = icon;
+            document.getElementById("weatherMain").innerHTML = weatherMain;   
             document.getElementById("city").innerHTML = city;
             document.getElementById("country").innerHTML = country;
         }
